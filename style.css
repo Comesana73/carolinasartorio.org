@@ -1,0 +1,172 @@
+/* Carolina Sartorio — site styles */
+
+:root {
+  --paper: #f1f3f2;
+  --surface: #ffffff;
+  --ink: #14232b;
+  --muted: #56656b;
+  --accent: #8a3557;
+  --rule: #d3dad8;
+  --ghost: #aab6b4;
+
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+
+  --measure: 40rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #11191d;
+    --surface: #182328;
+    --ink: #e4ebe9;
+    --muted: #9aa9ad;
+    --accent: #e39bb9;
+    --rule: #2a383e;
+    --ghost: #4b5c62;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+}
+
+a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: var(--paper); padding: 0.5rem 1rem; z-index: 10; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+.wrap { max-width: 72rem; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Header */
+.site-header .wrap {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-top: 1.5rem; padding-bottom: 1.5rem;
+  font-family: var(--sans);
+}
+.site-name { font-weight: 600; font-size: 1.05rem; text-decoration: none; letter-spacing: -0.01em; }
+.site-nav { display: flex; gap: 1.5rem; font-size: 1rem; }
+.site-nav a { text-decoration: none; color: var(--muted); padding: 0.25rem 0; }
+.site-nav a:hover { color: var(--ink); }
+.site-nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+
+main { padding-bottom: 5rem; }
+
+/* Type */
+h1, h2, h3 { font-family: var(--sans); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+.page-title { font-size: clamp(2.25rem, 6vw, 3.5rem); margin: 3rem 0 1rem; }
+.lede { color: var(--muted); max-width: var(--measure); margin: 0 0 3rem; }
+
+/* Home hero */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem;
+  padding: 3rem 0 4rem;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 4rem; padding: 5rem 0 6rem; }
+}
+.hero h1 {
+  font-size: clamp(3rem, 9vw, 6.25rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  margin-bottom: 2rem;
+}
+.hero .role { font-family: var(--sans); font-size: 1.2rem; font-weight: 500; margin: 0 0 1.25rem; }
+.hero .bio { max-width: 34rem; margin: 0 0 1.25rem; }
+.hero .degrees { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.75rem; }
+.hero .email { font-family: var(--sans); font-weight: 500; }
+
+/* Signature diagram: the actual sequence among possible ones */
+.paths { width: 100%; height: auto; max-width: 34rem; justify-self: center; display: block; }
+.paths .alt { stroke: var(--ghost); stroke-width: 1.5; stroke-dasharray: 3 6; fill: none; stroke-linecap: round; }
+.paths .alt-node { fill: var(--paper); stroke: var(--ghost); stroke-width: 1.5; }
+.paths .act { stroke: var(--ink); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+.paths .act-node { fill: var(--ink); }
+.paths .end-node { fill: var(--accent); }
+.paths .act-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.4s cubic-bezier(.6,.05,.3,1) .3s forwards; }
+.paths .end-node { opacity: 0; animation: appear .4s ease 2.5s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes appear { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .paths .act-draw { animation: none; stroke-dashoffset: 0; }
+  .paths .end-node { animation: none; opacity: 1; }
+}
+
+/* Home sections */
+.section { border-top: 1px solid var(--rule); padding: 3rem 0; display: grid; gap: 1.5rem; }
+@media (min-width: 900px) { .section { grid-template-columns: 14rem minmax(0, 1fr); gap: 3rem; } }
+.section > h2 { font-size: 1.35rem; }
+.section > h2 a { text-decoration: none; }
+.section .more { font-family: var(--sans); font-size: 0.95rem; margin: 1.5rem 0 0; }
+
+.shelf { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+@media (min-width: 700px) { .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.shelf a { text-decoration: none; display: block; }
+.shelf .t { font-family: var(--sans); font-weight: 600; font-size: 1.15rem; line-height: 1.25; display: block; margin-bottom: 0.35rem; }
+.shelf a:hover .t { color: var(--accent); }
+.shelf .m { color: var(--muted); font-size: 0.95rem; }
+
+/* Papers */
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem 0.5rem; align-items: center; margin-bottom: 1rem; font-family: var(--sans); }
+.chip {
+  font: inherit; font-size: 0.95rem; color: var(--ink); background: transparent;
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.35rem 0.9rem; cursor: pointer;
+}
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.search {
+  font: inherit; font-family: var(--sans); font-size: 1rem; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 0.6rem 0.85rem; width: 100%; max-width: 26rem; margin-bottom: 1rem;
+}
+.search::placeholder { color: var(--muted); }
+.count { font-family: var(--sans); color: var(--muted); font-size: 0.95rem; margin: 0 0 2rem; }
+
+.year-group { display: grid; gap: 0.5rem; border-top: 1px solid var(--rule); padding: 1.75rem 0 0.75rem; }
+@media (min-width: 900px) { .year-group { grid-template-columns: 8rem minmax(0, 1fr); gap: 2rem; } }
+.year { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--muted); line-height: 1.2; }
+@media (min-width: 900px) { .year { position: sticky; top: 1rem; align-self: start; } }
+.papers { list-style: none; margin: 0; padding: 0; }
+.paper { margin: 0 0 2rem; max-width: 46rem; }
+.paper h3 { font-size: 1.2rem; line-height: 1.3; margin-bottom: 0.35rem; }
+.paper h3 a { text-decoration: none; }
+.paper h3 a:hover { text-decoration: underline; }
+.paper .venue { margin: 0 0 0.4rem; font-size: 0.98rem; }
+.paper .note { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.paper .tags { margin: 0.5rem 0 0; font-family: var(--sans); font-size: 0.85rem; color: var(--muted); display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.empty { font-family: var(--sans); color: var(--muted); }
+[hidden] { display: none !important; }
+
+/* Books */
+.book { border-top: 1px solid var(--rule); padding: 3rem 0; display: grid; gap: 1rem; }
+@media (min-width: 900px) { .book { grid-template-columns: 8rem minmax(0, 1fr); gap: 2rem; } }
+.book h2 { font-size: clamp(1.6rem, 3.5vw, 2.25rem); margin-bottom: 0.5rem; }
+.book .pub { font-family: var(--sans); color: var(--muted); margin: 0 0 1.25rem; }
+.book .desc { max-width: var(--measure); margin: 0 0 1.25rem; }
+.book .links { font-family: var(--sans); display: flex; gap: 1.25rem; flex-wrap: wrap; margin: 0 0 1rem; }
+.book details { max-width: var(--measure); margin-top: 1rem; }
+.book summary { font-family: var(--sans); font-weight: 500; cursor: pointer; padding: 0.25rem 0; }
+.book summary:hover { color: var(--accent); }
+.book details h3 { font-size: 1rem; margin: 1.25rem 0 0.5rem; }
+.book details ul { margin: 0; padding-left: 1.1rem; }
+.book details li { margin-bottom: 0.3rem; }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--rule); }
+.site-footer .wrap { padding-top: 2rem; padding-bottom: 3rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-family: var(--sans); font-size: 0.95rem; color: var(--muted); }
+.site-footer a { color: var(--muted); }
